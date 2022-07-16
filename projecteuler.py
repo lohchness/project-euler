@@ -444,7 +444,6 @@ def traverse(tree, height, row, index):
     if row == height:
         return curr_num
     return curr_num + max(int(traverse(tree, height, row+1, index)), int(traverse(tree, height, row+1, index+1)))
-    # return max(tree[row+1][index], tree[row+1][index+1])
 
 def problem18():
     return traverse(triangle_list, 14, 0, 0)
