@@ -1,5 +1,7 @@
 import math
 
+from numpy import true_divide
+
 def problem1():
     total = 0
     for x in range(1000):
@@ -417,9 +419,6 @@ def problem17():
         # Num from [1000, inf]
         pass
 
-# print(problem17())
-
-# class node(self):
 
 triangle = """75
 95 64
@@ -448,4 +447,159 @@ def traverse(tree, height, row, index):
 def problem18():
     return traverse(triangle_list, 14, 0, 0)
 
-print(problem18())
+
+
+def leap_year(year):
+    if year%4 == 0:
+        if year%100 == 0:
+            if year%400 == 0:
+                return True
+            else:
+                return False
+        else:
+            return True
+    else:
+        return False
+
+def problem19():
+    sundays = 0
+    weekday = 2
+    month_days_non_leap = [31,28,31,30,31,30,31,31,30,31,30,31]
+    month_days_leap = [31,29,31,30,31,30,31,31,30,31,30,31]
+    
+    for year in range(1901, 2000+1):
+        if leap_year(year):
+            for month in range(0,12):
+                weekday += month_days_leap[month]
+                if weekday%7 == 0:
+                    sundays += 1
+        else:
+            for month in range(0,12):
+                weekday += month_days_non_leap[month]
+                if weekday%7 == 0:
+                    sundays += 1
+    return sundays
+
+# print(problem19())
+
+def problem20():
+    return sum([int(i) for i in (str(math.factorial(100)))])
+
+def sum_of_factors(n):
+    total = 0
+    for possible_factor in range(1, int(n/2)+1):
+        if n % possible_factor == 0:
+            total += possible_factor
+            # if 
+    return total
+
+# from collections import defaultdict
+
+def amicable_pair(num1, num2):
+    sum = 0
+    for i in range(1, int(math.sqrt(num1)) + 1):
+        if num1 % i == 0:
+            sum += i
+    if sum == num2:
+        return True
+    return False
+
+    pass
+
+def problem21_2():
+    amicable_sum = 0
+    amicable_pairs = dict()
+    for num in range(1, 10000+1):
+        if num not in amicable_pairs:
+            factor_sum = sum_of_factors(num)
+            if (factor_sum <= 10000) and (factor_sum != num):
+                if sum_of_factors(factor_sum) == num:
+                    amicable_sum += num
+                    amicable_sum += factor_sum
+                    amicable_pairs[num] = factor_sum
+                    amicable_pairs[factor_sum] = num
+    print(amicable_sum)
+    print(amicable_pairs)
+
+def amicable_num(num):
+    total = 0
+    for i in range(1, int(num/2)+1):
+        if num % i == 0:
+            total += i
+    return total
+
+def problem21_1():
+    total = 0
+    for num in range(1, 10000+1):
+        pair = amicable_num(num)
+        if num != pair:
+            if amicable_num(pair) == num:
+                total += num
+
+    return total
+
+
+    total = 0
+    iterated = []
+    for i in range(1,10000+1):
+        if i not in iterated:
+            for j in range(1, 10000+1):
+                if j not in iterated:
+                    if amicable_pair(i, j):
+                        total += i + j
+                        iterated.append(i)
+                        iterated.append(j)
+
+    return total
+    
+    
+    
+# print(problem211())
+
+def problem22():
+    with open("p022_names.txt", "r") as names:
+        name_list = str(names.read()).replace('"','').split(",")
+    sortedlist = sorted(name_list)
+    score = 0
+    for name_indx in range(len(sortedlist)):
+        name_score = 0
+        for letter in sortedlist[name_indx]:
+            name_score += (ord(letter)-64)
+        score += (name_score*(name_indx+1))
+    return score
+
+# print(problem22())
+
+def is_abundant(num):
+    if sum_of_factors(num) > num:
+        return True
+    return False
+
+def problem23():
+    abundant_sum = 0
+    abundant_numbers = []
+    for number in range(12, 28123):
+        if is_abundant(number):
+            abundant_numbers.append(number)
+    # print(abundant_numbers)
+
+    # init list
+    bools = [0] * (28123-1)
+
+    
+
+    for number in range(1, 28123):
+        for abundant_idx in range(len(abundant_numbers)):
+            if number-abundant_numbers[abundant_idx] in abundant_numbers:
+                break
+        abundant_sum += number
+            
+    return abundant_sum
+
+    # for num1 in range(len(abundant_numbers)):
+    #     for num2 in range(len(abundant_numbers)):
+    #         if num1 > num2:
+
+
+print(problem23())
+
