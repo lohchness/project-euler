@@ -583,10 +583,13 @@ def problem23():
             abundant_numbers.append(number)
     # print(abundant_numbers)
 
-    # init list
+    # init list of 28123 zeros
     bools = [0] * (28123-1)
 
+    # iterate through bools, if num pair is an abundant sum, set bool[num_index] to 1
     
+    # iterate through bools, if value is 0 we add it to running total
+    # return total
 
     for number in range(1, 28123):
         for abundant_idx in range(len(abundant_numbers)):
@@ -601,5 +604,57 @@ def problem23():
     #         if num1 > num2:
 
 
-print(problem23())
+# print(problem23())
 
+from itertools import permutations, islice
+
+def problem24():
+    digits = [0,1,2,3,4,5,6,7,8,9]
+    # digits = [0,1,2]
+    
+    perms = permutations(digits,len(digits))
+    # perms = permutations(digits, 3)
+    # print([i for i in perms])
+    # return next(islice(perms, 3, None), None)
+
+    return next(islice(perms, 1000000-1, None), None)
+    return next(num for ind,num in enumerate(perms) if ind==1000000-1)
+
+# print(problem24())
+
+def nth_fibonacci(n):
+    fib_1, fib_2 = 1, 1
+    for x in range(n-1):
+        fib_1, fib_2 = fib_2, fib_1+fib_2
+    return fib_1
+
+def problem25():
+    index = 1
+    while True:
+        if len(str(nth_fibonacci(index))) >= 1000:
+            return index
+        index += 1
+        # return index if len(str(nth_fibonacci(index))) >= 1000 else index += 1
+
+# print(problem25())
+
+from decimal import Decimal
+
+def exact_fraction(n): # n is the denominator in the unit fraction 
+    if len(str(1/n)) < 18:
+        return True
+    return False
+
+def recuuring_cycle(n): # n is the denominator in the unit fraction
+    if not exact_fraction(n):
+        pass
+
+
+
+def problem26():
+    return
+
+
+print(1/7)
+print(Decimal(1)/Decimal(7))
+print(Decimal(10**12)*Decimal(1)/Decimal(7))
