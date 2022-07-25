@@ -1,4 +1,5 @@
 import math
+from re import L
 
 from numpy import true_divide
 
@@ -19,11 +20,7 @@ def problem2():
             total += x
     return total
 
-def isprime(n):
-    for possible_factor in range(2, int(math.sqrt(n))+1):
-        if n % possible_factor == 0:
-            return False
-    return True
+
 
 def problem3():
     num = 600851475143
@@ -645,16 +642,99 @@ def exact_fraction(n): # n is the denominator in the unit fraction
         return True
     return False
 
-def recuuring_cycle(n): # n is the denominator in the unit fraction
+def recurring_cycle(n): # n is the denominator in the unit fraction
     if not exact_fraction(n):
-        pass
-
-
+        float_number = (Decimal(1)/Decimal(n))
+        length = 1
+        while True:
+            first = int(str(float_number).split('.')[1][0:length])
+            second = int(str((float_number)*(Decimal(10**length))).split('.')[1][0:length])
+            if first == second:
+                third = int(str((float_number)*(Decimal(10**(length*2)))).split('.')[1][0:length])
+                if second == third:
+                    fourth = int(str((float_number)*(Decimal(10**(length*3)))).split('.')[1][0:length])
+                    if third == fourth:
+                        fifth = int(str((float_number)*(Decimal(10**(length*4)))).split('.')[1][0:length])
+                        if fourth == fifth:
+                            return length
+            print(f"Length isn't {length}")
+            length += 1
+            continue
+    return 0
 
 def problem26():
     return
 
+# print(recurring_cycle(7))
 
-print(1/7)
-print(Decimal(1)/Decimal(7))
-print(Decimal(10**12)*Decimal(1)/Decimal(7))
+def isprime(n):
+    for possible_factor in range(2, int(math.sqrt(n))+1):
+        if n % possible_factor == 0:
+            return False
+    return True
+
+def problem27():
+    maximum_consecutive = 0
+    for a in range(-999, 999+1):
+        for b in range(-1000, 1000+1):
+            if b >= 2:
+                if isprime(b): # only need to check quadratics where b is prime
+                    count = 0
+                    n = 0
+                    while True:
+                        quadratic = (n**2)+(a*n)+b
+                        if quadratic >= 2: # primes have to be greater or equal to 2
+                            if isprime(quadratic):
+                                count += 1
+                                n += 1
+                            else:
+                                break
+                        else:
+                            break
+                    if count > maximum_consecutive:
+                        largest_a = a
+                        largest_b = b
+                        maximum_consecutive = count
+                        product = a*b
+    return largest_a, largest_b, maximum_consecutive, product
+
+def problem28_1():
+    total = 0
+    square_size = 1
+    current_number = 1
+    while square_size <= 1001:
+        if square_size == 1:
+            total += 1
+        else:
+            for corner in range(4):
+                current_number += (square_size-1)
+                total += current_number
+        square_size += 2
+    return total
+
+def problem28_2():
+    jump = 1
+    count = 0
+    total = 1
+    for i in range(2, 1000+1, 2):
+        for j in range(4):
+            jump += i
+            total += jump
+    return total
+
+
+def problem29():
+    terms = set()
+    for a in range(2, 100+1):
+        for b in range(2, 100+1):
+            num = a**b
+            if num not in terms:
+                terms.add(num)
+    return len(terms)
+
+def problem30():
+    sum = 0
+    for num in range(2, 10000+1):
+        pass
+
+print(problem30())
